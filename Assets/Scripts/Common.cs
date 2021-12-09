@@ -10,7 +10,7 @@ public class Common : MonoBehaviour
         DrawLine(curvePoints(a, b, c, resolution), lr);
     }
 
-    public static void DrawLine(Vector2[] positions, LineRenderer lr)
+    public static void drawLine(Vector2[] positions, LineRenderer lr)
     {
         lr.positionCount = positions.Length;
         lr.SetPositions(vec2ArrayToVec3Array(positions));
@@ -39,6 +39,24 @@ public class Common : MonoBehaviour
         }
         return positions;
     }
+
+    public static Vector2[] circlePoints(Vector2 center, Vector2 radius, float resolution) {
+        resolution = Mathf.Clamp(resolution, 1, 100);
+        Vector2[] positions = new Vector2[100];
+        float x, y, angle = 0f;
+
+        for (int i = 0; i < (resolution + 1); i++)
+        {
+            x = (Mathf.Sin(Mathf.Deg2Rad * angle) * radius.x) + center.x;
+            y = (Mathf.Cos(Mathf.Deg2Rad * angle) * radius.y) + center.y;
+
+            positions[i] = new Vector2(x,y);
+
+            angle += (360f / resolution);
+        }
+        return positions;
+    }
+    
     public static Vector2 quadraticCurve(Vector2 a, Vector2 b, Vector2 c, float t)
     {
         Vector2 p = Vector2.Lerp(a, b, t);
@@ -82,6 +100,15 @@ public class Common : MonoBehaviour
             pos = p;
             time = t;
         }
+    }
+
+    public static void drawBox(Vector2 p, Vector2 dimensions, LineRender lr) {
+        drawLine(new Vector2[
+            new Vector2(p.x - dimensions.x/2f, p.y + dimensions.y/2f), //top left
+            new Vector2(p.x - dimensions.x/2f, p.y - dimensions.y/2f), // bottom left
+            new Vector2(p.x + dimensions.x/2f, p.y + dimensions.y/2f), //top right
+            new Vector2(p.x + dimensions.x/2f, p.y - dimensions.y/2f) // top left
+        ], lr);
     }
 
     public static void drawPoint(Vector2 pos, Color color, float radius=1)
