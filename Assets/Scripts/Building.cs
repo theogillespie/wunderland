@@ -18,6 +18,7 @@ public class Building : MonoBehaviour
             draw();
         }
     }
+    Car comingCar;
     BoxCollider2D col;
     // Start is called before the first frame update
     void Start()

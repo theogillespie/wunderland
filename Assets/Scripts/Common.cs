@@ -102,6 +102,13 @@ public static class Common : MonoBehaviour
         }
     }
 
+    public struct FutureCar {
+        public Vector2 position;
+        public float rotation;
+        public Vector2 dimensions;
+        public float time;
+    }
+
     public struct positionAndTime
     {
         public Vector2 pos;
@@ -144,6 +151,8 @@ public static class Common : MonoBehaviour
         }
         return closestIndex;
     }
+
+    
 
     public static void configureLineRenderer(LineRendererConfig config) {
         throw new NotImplementedException();

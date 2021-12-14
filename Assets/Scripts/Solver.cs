@@ -6,16 +6,25 @@ public class Solver {
     Car car;
     Building building;
     Road road;
+
+    public void Init() {}
     public void Update() {}
 }
 public class ShallowDestinationSolver: Solver {
     int index;
     int desiredIndex;
-    float distanceBeforeNext = .1f;
+    const float distanceBeforeNext = .1f;
+    const float sleepTime = 5f; // chills after arriving at a destination
+    float startSleepTime;
     public ShallowDestinationSolver(Car c, Building destination) {
-        car = car;
+        Init(c, destination);
+    }
+
+    override void Init(Car c, Building destination) {
+        car = c;
         building = destination;
         car.destination = building.transform;
+        building.comingCar = car;
 
         index = Common.closestToo(car.position(), road.Lanes[0].centerLine);
         desiredIndex = Common.closestToo(car.destination.position, road.Lanes[0].centerLine);
@@ -25,7 +34,15 @@ public class ShallowDestinationSolver: Solver {
         if(index >= desiredIndex) {
             if(!car.sleep) {
                 car.sleep = true;
+                startSleepTime = car.elaspedTime;
             } 
+            if(car.elaspedTime - startSleepTime >= sleepTime) {
+                building.comingCar = null;
+                Building newBuilding = registry.newDesination(car.position());
+                if(newBuilding) {
+                    Init(car, newBuilding);
+                }
+            }
             return;
         }
         if(Vector2.Distance(car.position(), car.desired.pos) <= distanceBeforeNext) {

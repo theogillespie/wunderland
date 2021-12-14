@@ -45,6 +45,7 @@ public class Car : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        elaspedTime += Time.deltaTime;
         if(charge <= 0f || sleep)
         {
             return;
@@ -59,7 +60,7 @@ public class Car : MonoBehaviour
         }
 
         //charge -= speedDraw.Evaluate(velocity); disabled for testing
-        elaspedTime += Time.deltaTime;
+        
     }
 
     public void specialWare() {}
