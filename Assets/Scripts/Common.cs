@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Common : MonoBehaviour
+public static class Common : MonoBehaviour
 {
-
     public static void drawCurve(Vector2 a, Vector2 b, Vector3 c, int resolution, LineRenderer lr)
     {
         DrawLine(curvePoints(a, b, c, resolution), lr);
@@ -126,11 +125,21 @@ public class Common : MonoBehaviour
             points = rotatePoints(points, p, angle);
         }
         drawLine(points, lr);
-        
+    }
+
+    public static Vector2[] offsetPoints(Vector2 points, Vector2 offset) {
+        for(int i = 0; i < points.length; i++) {
+            points[i] += offset;
+        }
+        return points;
+    }
+
+    public static void configureLineRenderer(LineRendererConfig config) {
+        throw new NotImplementedException();
     }
 
     public static void drawPoint(Vector2 pos, Color color, float radius=1)
     {
-
+        throw new NotImplementedException();
     }
 }
