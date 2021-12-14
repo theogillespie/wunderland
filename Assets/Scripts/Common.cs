@@ -114,13 +114,19 @@ public class Common : MonoBehaviour
         }
     }
 
-    public static void drawBox(Vector2 p, Vector2 dimensions, LineRender lr) {
-        drawLine(new Vector2[
+    public static void drawBox(Vector2 p, Vector2 dimensions, LineRender lr, float angle=0f) {
+
+        Vector[] points = new Vector2[
             new Vector2(p.x - dimensions.x/2f, p.y + dimensions.y/2f), //top left
             new Vector2(p.x - dimensions.x/2f, p.y - dimensions.y/2f), // bottom left
             new Vector2(p.x + dimensions.x/2f, p.y + dimensions.y/2f), //top right
             new Vector2(p.x + dimensions.x/2f, p.y - dimensions.y/2f) // top left
-        ], lr);
+        ];
+        if(angle != 0f || angle != 360f) {
+            points = rotatePoints(points, p, angle);
+        }
+        drawLine(points, lr);
+        
     }
 
     public static void drawPoint(Vector2 pos, Color color, float radius=1)

@@ -8,7 +8,7 @@ public class Registry {
     public List<Road> roads = new List<Road>();
 
     public List<notice> notices = new List<notice>();
-    public List<notices> displayNotices = new List<notices>();
+
     public struct notice {
         public enum logLevel {
             info,
@@ -24,6 +24,10 @@ public class Registry {
         }
     }
 
+
+    public Registry() {
+        this.automaticallyFind();
+    }
     public void automaticallyFind()
     {
         cars.AddRange(GameObject.FindObjectsOfType<Car>());
