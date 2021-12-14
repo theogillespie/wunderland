@@ -15,7 +15,7 @@ public class Solver {
 public class ShallowDestinationSolver: Solver {
     int index;
     int desiredIndex;
-    const float distanceBeforeNext = .1f;
+    const float distanceBeforeNext = .1f; //assumes the car is decently close to things
     const float sleepTime = 5f; // chills after arriving at a destination
     float startSleepTime;
     public ShallowDestinationSolver(Car c, Building destination) {
@@ -59,8 +59,6 @@ public class Solver : MonoBehaviour
 {
     Registry registry;
     List<T> solvers = new List<T>();
-
-
     Car car;
     Building building;
     void Setup() {
@@ -74,9 +72,7 @@ public class Solver : MonoBehaviour
     }
 
     void LateUpdate() {
-        
+        solverUpdate();
     }
-
-    
 
 }
