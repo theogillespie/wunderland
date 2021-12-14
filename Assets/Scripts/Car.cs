@@ -42,6 +42,10 @@ public class Car : MonoBehaviour
         draw();
     }
 
+    public void localizeTime(float time) {
+        return time + elaspedTime;
+    }
+
     // Update is called once per frame
     void Update()
     {

@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Registry {
-    public List<Car> cars = new List<Car>();
-    public List<Building> buildings = new List<Building>();
-    public List<Road> roads = new List<Road>();
+public static class Registry {
+    public static List<Car> cars = new List<Car>();
+    public static List<Building> buildings = new List<Building>();
+    public static List<Road> roads = new List<Road>();
 
-    public List<notice> notices = new List<notice>();
+    public static List<notice> notices = new List<notice>();
 
-    Random random = new Random();
+    static Random random = new Random();
 
     public struct notice {
         public enum logLevel {
@@ -27,18 +27,18 @@ public class Registry {
     }
 
 
-    public Registry() {
+    static public Registry() {
         this.automaticallyFind();
     }
 
-    public void automaticallyFind()
+    static public void automaticallyFind()
     {
         cars.AddRange(GameObject.FindObjectsOfType<Car>());
         buildings.AddRange(GameObject.FindObjectsOfType<Building>());
         roads.AddRange(GameObject.FindObjectsOfType<Road>());
     }
 
-    public Building newDesination(Vector2 pos, float minDist=10f, int depth=0) {
+    static public Building newDesination(Vector2 pos, float minDist=10f, int depth=0) {
         if(depth >= 5) {
             return null; // to prevent never-ending recursion 
         }

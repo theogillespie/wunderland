@@ -6,7 +6,6 @@ public class Solver {
     Car car;
     Building building;
     Road road;
-
     public void Init() {}
     public void Update() {}
 
@@ -49,18 +48,19 @@ public class ShallowDestinationSolver: Solver {
         }
         if(Vector2.Distance(car.position(), car.desired.pos) <= distanceBeforeNext) {
             index++;
-            car.desired = new Common.positionAndTime(road.Lanes[0].centerLine[index], .1f);
+            car.desired = new Common.positionAndTime(road.Lanes[0].centerLine[index], car.localizeTime(0.1f));
         }
     }
 }
 
 
-public class Solver : MonoBehaviour
+public class Main : MonoBehaviour
 {
     Registry registry;
-    List<T> solvers = new List<T>();
+    List<Solver> solvers = new List<Solver>();
     Car car;
     Building building;
+    
     void Setup() {
         solvers.Add(new ShallowDestinationSolver(car, building));
     }
