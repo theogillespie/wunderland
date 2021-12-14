@@ -128,10 +128,21 @@ public static class Common : MonoBehaviour
     }
 
     public static Vector2[] offsetPoints(Vector2 points, Vector2 offset) {
-        for(int i = 0; i < points.length; i++) {
+        for(int i = 0; i < points.Length; i++) {
             points[i] += offset;
         }
         return points;
+    }
+
+    public static int closestToo(Vector2 position, Vector2 points) {
+        float closestDist = Mathf.Infinity;
+        float closestIndex = null;
+        for(int i = 0; i < points.Length; i++) {
+            if(Vector2.Distance(position, points[i]) < closestDist) {
+                closestIndex = i;
+            }
+        }
+        return closestIndex;
     }
 
     public static void configureLineRenderer(LineRendererConfig config) {

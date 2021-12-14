@@ -28,6 +28,10 @@ public class Lane : MonoBehaviour
         Common.drawLine(Common.offsetPoints(centerLine, new Vector2(-laneWidth, 0)), lr);  // left boundary
     }
 
+    public Vector2 getDir(int index) {
+        return centerLine[i] - centerLine[index-1];
+    }
+
     // Update is called once per frame
     void Update()
     {

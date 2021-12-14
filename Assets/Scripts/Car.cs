@@ -13,6 +13,7 @@ public class Car : MonoBehaviour
     public string name = "Car";
     
     public carType type;
+    public bool sleep;
     public float charge = 100f;
     float elaspedTime;
     public AnimationCurve speedDraw;
@@ -20,6 +21,7 @@ public class Car : MonoBehaviour
     Common.PID turnControl = new Common.PID(0, 0, 0);
 
     public Common.positionAndTime desired;
+    public Transform destination;
 
     public Vector2 dimensions {
         get { return dimensions; }
@@ -43,7 +45,7 @@ public class Car : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(charge <= 0)
+        if(charge <= 0f || sleep)
         {
             return;
         }
@@ -56,7 +58,7 @@ public class Car : MonoBehaviour
             specialWare();
         }
 
-        charge -= speedDraw.Evaluate(velocity);
+        //charge -= speedDraw.Evaluate(velocity); disabled for testing
         elaspedTime += Time.deltaTime;
     }
 
