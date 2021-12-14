@@ -152,8 +152,14 @@ public static class Common : MonoBehaviour
         return closestIndex;
     }
 
-    
-
+    public static Vector2[][] mergeLinesForDrawing(Vector2[][] lines) {
+        for(int i = 0; i<lines.Length; i++) {
+            Vector2 line1 = lines[i];
+            Vector2 line2 = lines[i];
+            line1[line1.Length-1] = line2[0];
+        }
+        return lines;
+    }
     public static void configureLineRenderer(LineRendererConfig config) {
         throw new NotImplementedException();
     }

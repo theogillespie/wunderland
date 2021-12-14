@@ -9,6 +9,8 @@ public class Solver {
 
     public void Init() {}
     public void Update() {}
+
+    public void Copy() {return this.MemberwiseClone(); } // shallow
 }
 public class ShallowDestinationSolver: Solver {
     int index;
@@ -57,6 +59,7 @@ public class Solver : MonoBehaviour
 {
     Registry registry;
     List<T> solvers = new List<T>();
+
 
     Car car;
     Building building;
