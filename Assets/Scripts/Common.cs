@@ -26,6 +26,18 @@ public class Common : MonoBehaviour
         return array;
     }
 
+    public static Vector2[] rotatePoints(Vector2[] points, Vector2 pos, float angle) {
+        for(int i = 0; i < pos.Length; i++)
+        {
+            Vector2 point = points[i];
+            float x = (point.x - pos.x) * Mathf.Cos(angle)- (point.y - pos.y) * Mathf.Sin(angle) + pos.x;
+            float y = (point.x - pos.y) * Mathf.Sin(angle) + (point.y - pos.y) * Mathf.Cos(angle) + pos.y;
+            points[i] = new Vector2(x, y);
+        }
+        
+        return points;
+    }
+
     public static Vector2[] curvePoints(Vector2 a, Vector2 b, Vector2 c, int resolution)
     {
         resolution = Mathf.Clamp(resolution, 1, 100);
