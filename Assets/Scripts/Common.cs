@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class Common : MonoBehaviour
+public static class Common
 {
     public static void drawCurve(Vector2 a, Vector2 b, Vector3 c, int resolution, LineRenderer lr)
     {
-        DrawLine(curvePoints(a, b, c, resolution), lr);
+        drawLine(curvePoints(a, b, c, resolution), lr);
     }
 
     public static void drawLine(Vector2[] positions, LineRenderer lr)
@@ -26,7 +26,8 @@ public static class Common : MonoBehaviour
     }
 
     public static Vector2[] rotatePoints(Vector2[] points, Vector2 pos, float angle) {
-        for(int i = 0; i < pos.Length; i++)
+        angle = angle * Mathf.Deg2Rad;
+        for(int i = 0; i < points.Length; i++)
         {
             Vector2 point = points[i];
             float x = (point.x - pos.x) * Mathf.Cos(angle)- (point.y - pos.y) * Mathf.Sin(angle) + pos.x;
@@ -120,30 +121,34 @@ public static class Common : MonoBehaviour
         }
     }
 
-    public static void drawBox(Vector2 p, Vector2 dimensions, LineRender lr, float angle=0f) {
+    public static void drawBox(Vector2 p, Vector2 dimensions, LineRenderer lr, float angle=0f) {
 
-        Vector[] points = new Vector2[
+        Vector2[] points = new Vector2[4] {
             new Vector2(p.x - dimensions.x/2f, p.y + dimensions.y/2f), //top left
-            new Vector2(p.x - dimensions.x/2f, p.y - dimensions.y/2f), // bottom left
             new Vector2(p.x + dimensions.x/2f, p.y + dimensions.y/2f), //top right
-            new Vector2(p.x + dimensions.x/2f, p.y - dimensions.y/2f) // top left
-        ];
+            new Vector2(p.x + dimensions.x/2f, p.y - dimensions.y/2f), // bottom right
+            new Vector2(p.x - dimensions.x/2f, p.y - dimensions.y/2f) // bottom left
+        };
+
+        points = stichPolygon(points);
+
         if(angle != 0f || angle != 360f) {
             points = rotatePoints(points, p, angle);
         }
         drawLine(points, lr);
     }
 
-    public static Vector2[] offsetPoints(Vector2 points, Vector2 offset) {
+    public static Vector2[] offsetPoints(Vector2[] points, Vector2 offset) {
+        
         for(int i = 0; i < points.Length; i++) {
             points[i] += offset;
         }
         return points;
     }
 
-    public static int closestToo(Vector2 position, Vector2 points) {
+    public static int closestToo(Vector2 position, Vector2[] points) {
         float closestDist = Mathf.Infinity;
-        float closestIndex = null;
+        int closestIndex = -1;
         for(int i = 0; i < points.Length; i++) {
             if(Vector2.Distance(position, points[i]) < closestDist) {
                 closestIndex = i;
@@ -152,20 +157,29 @@ public static class Common : MonoBehaviour
         return closestIndex;
     }
 
+    public static Vector2[] stichPolygon(Vector2[] points)
+    {
+        List<Vector2> newPoints = new List<Vector2>();
+        newPoints.AddRange(points);
+        newPoints.Add(points[0]);
+        return newPoints.ToArray();
+    }
+
     public static Vector2[][] mergeLinesForDrawing(Vector2[][] lines) {
-        for(int i = 0; i<lines.Length; i++) {
-            Vector2 line1 = lines[i];
-            Vector2 line2 = lines[i];
+
+        for(int i = 0; i< lines.Length; i++) {
+            Vector2[] line1 = lines[i];
+            Vector2[] line2 = lines[i];
             line1[line1.Length-1] = line2[0];
         }
         return lines;
     }
     public static void configureLineRenderer(LineRendererConfig config) {
-        throw new NotImplementedException();
+        throw new System.NotImplementedException();
     }
 
     public static void drawPoint(Vector2 pos, Color color, float radius=1)
     {
-        throw new NotImplementedException();
+        throw new System.NotImplementedException();
     }
 }

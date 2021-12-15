@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(LineRenderer))]
 public class Building : MonoBehaviour
 {
     public enum buildingType {
@@ -11,19 +12,18 @@ public class Building : MonoBehaviour
     }
     public string name;
     public buildingType type;
-    public Vector2 dimensions {
-        get { return dimensions; }
-        set {
-            dimensions = value;
-            draw();
-        }
-    }
-    Car comingCar;
+    public Vector2 dimensions;
+    
+    public Car comingCar;
+
     BoxCollider2D col;
+    LineRenderer lr;
     // Start is called before the first frame update
     void Start()
     {
         col = GetComponent<BoxCollider2D>();
+        col.size = dimensions;
+        lr = GetComponent<LineRenderer>();
         draw();
     }
 
@@ -38,9 +38,20 @@ public class Building : MonoBehaviour
     public void specialWare() {}
 
     public void draw() {
-        Common.drawBox(position(), dimensions, lr);
+        Common.drawBox(position(), dimensions, lr, angle:heading()) ;
     }
     public Vector2 position() {
-        return transform.postion;
+        return transform.position;
+    }
+
+    public float heading()
+    {
+        return transform.rotation.eulerAngles.z;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if(!lr) { lr = GetComponent<LineRenderer>(); }
+        draw();
     }
 }
